@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axon AI — Intelligent Automation for Home Service Businesses</title>
+<meta name="description" content="Axon AI helps home service businesses on California's Central Coast stop losing jobs to missed calls and slow follow-up. Local. Automated. Always on.">
+
+<style>
+  /* ============================================================
+     1. DESIGN TOKENS — change colors/fonts here, site-wide
+     ============================================================ */
+  :root {
+    /* Brand core */
+    --ink:        #0B0E14;   /* near-black background */
+    --ink-panel:  #12161F;   /* slightly lighter panel bg */
+    --ink-line:   #1F2533;   /* hairline borders on dark */
+    --indigo:     #4F46E5;   /* primary brand color */
+    --indigo-dim: #3730A3;   /* darker indigo for depth */
+    --violet:     #8B5CF6;   /* secondary accent */
+    --mist:       #E0DFFF;   /* light indigo tint */
+    --paper:      #F4F4F8;   /* off-white section bg */
+    --paper-line: #E3E2EC;   /* hairline borders on light */
+    --live:       #10B981;   /* reserved: "active/live" status only */
+    --text-hi:    #F5F6FA;   /* high-contrast text on dark */
+    --text-lo:    #8E94A8;   /* muted text on dark */
+    --text-ink:   #14171F;   /* high-contrast text on light */
+    --text-mute:  #5B5F70;   /* muted text on light */
+
+    /* Type */
+    --font-display: 'Axon Display', -apple-system, 'Segoe UI', system-ui, sans-serif;
+    --font-body:    -apple-system, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-mono:    'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--text-hi);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img, svg { display: block; max-width: 100%; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* Reduced motion respect */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ============================================================
+     2. TYPOGRAPHY
+     ============================================================ */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    color: var(--text-hi);
+  }
+  .on-light h1, .on-light h2, .on-light h3, .on-light h4 { color: var(--text-ink); }
+
+  h1 { font-size: clamp(38px, 5.6vw, 68px); }
+  h2 { font-size: clamp(28px, 3.6vw, 42px); }
+  h3 { font-size: 21px; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--live);
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.18);
+  }
+
+  p.lead {
+    font-size: 18px;
+    color: var(--text-lo);
+    max-width: 540px;
+    line-height: 1.7;
+  }
+  .on-light p.lead { color: var(--text-mute); }
+
+  /* ============================================================
+     3. NAV
+     ============================================================ */
+  header.nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11,14,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--ink-line);
+    transition: background 0.3s ease;
+  }
+  .nav-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 19px;
+    color: var(--text-hi);
+  }
+  .brand .ai-tag { color: var(--indigo); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    font-size: 14.5px;
+    color: var(--text-lo);
+  }
+  .nav-links a { 
+    transition: color 0.15s, transform 0.2s; 
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--indigo);
+    transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-links a:hover { color: var(--text-hi); }
+  .nav-cta {
+    padding: 10px 20px;
+    background: var(--indigo);
+    color: white;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+  }
+  .nav-cta:hover { 
+    background: var(--indigo-dim); 
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+  }
+  .nav-toggle { display: none; }
+
+  /* Mobile menu overlay */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    background: var(--ink-panel);
+    border-bottom: 1px solid var(--ink-line);
+    padding: 24px 32px;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 99;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+  .mobile-menu.open { display: flex; }
+
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .nav-toggle {
+      display: block;
+      background: none;
+      border: 1px solid var(--ink-line);
+      color: var(--text-hi);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+  }
+
+  /* ============================================================
+     4. HERO
+     ============================================================ */
+  .hero {
+    position: relative;
+    padding: 100px 0 90px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 560px;
+    height: 560px;
+    background: radial-gradient(circle, rgba(79,70,229,0.22) 0%, transparent 70%);
+    pointer-events: none;
+    animation: glowPulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes glowPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.15); opacity: 1; }
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 64px;
+    align-items: center;
+    position: relative;
+  }
+  .hero h1 { margin-bottom: 22px; }
+  .hero h1 .accent { color: var(--indigo); }
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 34px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    padding: 14px 26px;
+    background: var(--indigo);
+    color: white;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+  }
+  .btn-primary:hover { 
+    background: var(--indigo-dim); 
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.45);
+  }
+  .btn-secondary {
+    padding: 14px 26px;
+    background: transparent;
+    color: var(--text-hi);
+    border: 1px solid var(--ink-line);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-secondary:hover { 
+    background: var(--ink-panel); 
+    border-color: #2a3142; 
+    transform: translateY(-2px);
+  }
+  .on-light .btn-secondary { border-color: var(--paper-line); color: var(--text-ink); }
+  .on-light .btn-secondary:hover { background: white; border-color: #c8c7d6; }
+
+  .hero-proof {
+    margin-top: 40px;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .hero-proof-item { font-size: 13px; color: var(--text-lo); }
+  .hero-proof-item strong {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 22px;
+    color: var(--text-hi);
+    font-weight: 500;
+  }
+
+  /* ---- Signature element: live missed-call ledger ---- */
+  .ledger {
+    background: var(--ink-panel);
+    border: 1px solid var(--ink-line);
+    border-radius: 14px;
+    padding: 22px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .ledger:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 28px 50px rgba(0,0,0,0.5), 0 0 20px rgba(79,70,229,0.15);
+  }
+  .ledger-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .ledger-head .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-lo);
+  }
+  .ledger-head .live-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--live);
+    letter-spacing: 0.06em;
+  }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--live);
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(16,185,129,0); }
+  }
+
+  .ledger-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--ink-line);
+    opacity: 0;
+    animation: rowIn 0.5s forwards cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ledger-row:last-child { border-bottom: none; }
+  @keyframes rowIn { 
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); } 
+  }
+  .ledger-row .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    margin-top: 5px; flex-shrink: 0;
+  }
+  .dot-miss { background: #F87171; box-shadow: 0 0 8px rgba(248,113,113,0.4); }
+  .dot-sent { background: var(--indigo); box-shadow: 0 0 8px rgba(79,70,229,0.4); }
+  .dot-book { background: var(--live); box-shadow: 0 0 8px rgba(16,185,129,0.4); }
+  .ledger-row .row-text { font-size: 13.5px; color: var(--text-hi); }
+  .ledger-row .row-sub { font-size: 11.5px; color: var(--text-lo); margin-top: 2px; }
+  .ledger-row .row-time { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--text-lo); flex-shrink: 0; }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero p.lead { max-width: 100%; }
+  }
+
+  /* ============================================================
+     5. SECTIONS — generic & animations
+     ============================================================ */
+  section { padding: 96px 0; }
+  .on-light { background: var(--paper); color: var(--text-ink); }
+  .section-head { max-width: 640px; margin-bottom: 56px; }
+  .section-head .eyebrow { color: var(--indigo); }
+
+  /* Scroll reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---- Problem grid ---- */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--paper-line);
+    border: 1px solid var(--paper-line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  }
+  .problem-card {
+    background: white;
+    padding: 32px 28px;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .problem-card:hover {
+    background: #FAFAFC;
+    transform: translateY(-2px);
+  }
+  .problem-card .num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--indigo);
+    letter-spacing: 0.08em;
+    margin-bottom: 18px;
+  }
+  .problem-card h3 { font-size: 18px; margin-bottom: 10px; }
+  .problem-card p { font-size: 14.5px; color: var(--text-mute); }
+
+  @media (max-width: 860px) {
+    .problem-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---- How it works (process) ---- */
+  .process {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  .process-step { 
+    position: relative; 
+    padding-top: 28px; 
+    border-top: 2px solid var(--ink-line); 
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+  .process-step:hover {
+    border-top-color: var(--indigo);
+    transform: translateY(-4px);
+  }
+  .process-step .step-num {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--indigo);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .process-step h3 { font-size: 16.5px; margin-bottom: 8px; color: var(--text-hi); }
+  .process-step p { font-size: 13.5px; color: var(--text-lo); }
+
+  @media (max-width: 860px) {
+    .process { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .process { grid-template-columns: 1fr; }
+  }
+
+  /* ---- Pricing ---- */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .price-card {
+    background: white;
+    border: 1px solid var(--paper-line);
+    border-radius: 14px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  }
+  .price-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  }
+  .price-card.featured {
+    border: 2px solid var(--indigo);
+    position: relative;
+    box-shadow: 0 12px 30px rgba(79, 70, 229, 0.12);
+  }
+  .price-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -11px;
+    left: 28px;
+    background: var(--indigo);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .price-card .tier-name { font-size: 13px; font-weight: 500; color: var(--indigo); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 14px; }
+  .price-card .tier-price { font-family: var(--font-mono); font-size: 34px; color: var(--text-ink); font-weight: 500; margin-bottom: 4px; }
+  .price-card .tier-price span { font-size: 14px; color: var(--text-mute); font-family: var(--font-body); font-weight: 400; }
+  .price-card .tier-setup { font-size: 12.5px; color: var(--text-mute); margin-bottom: 24px; }
+  .price-card ul { list-style: none; margin-bottom: 28px; flex-grow: 1; }
+  .price-card li {
+    font-size: 14px;
+    color: var(--text-ink);
+    padding: 9px 0;
+    border-top: 1px solid var(--paper-line);
+    display: flex;
+    gap: 10px;
+  }
+  .price-card li:first-of-type { border-top: none; }
+  .price-card li::before { content: '✓'; color: var(--indigo); font-weight: 600; flex-shrink: 0; }
+
+  @media (max-width: 900px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+    .price-card.featured { order: -1; }
+  }
+
+  /* ---- Testimonial / proof strip ---- */
+  .proof-strip {
+    border-top: 1px solid var(--ink-line);
+    border-bottom: 1px solid var(--ink-line);
+    padding: 56px 0;
+  }
+  .proof-strip .wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: center;
+  }
+  .proof-stat strong {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 30px;
+    color: var(--indigo);
+    font-weight: 500;
+  }
+  .proof-stat span { font-size: 13px; color: var(--text-lo); }
+
+  @media (max-width: 760px) {
+    .proof-strip .wrap { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
+  }
+
+  /* ---- FAQ ---- */
+  .faq-item {
+    border-bottom: 1px solid var(--ink-line);
+    padding: 22px 0;
+    transition: background 0.2s ease;
+  }
+  .faq-item summary {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-hi);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+';
+    font-size: 20px;
+    color: var(--indigo);
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p {
+    margin-top: 14px;
+    font-size: 14.5px;
+    color: var(--text-lo);
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  /* ---- Final CTA ---- */
+  .cta-block {
+    background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dim) 100%);
+    border-radius: 20px;
+    padding: 64px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(79,70,229,0.3);
+  }
+  .cta-block::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cta-block h2 { color: white; margin-bottom: 14px; }
+  .cta-block p { color: rgba(255,255,255,0.78); max-width: 480px; margin: 0 auto 32px; font-size: 16px; }
+  .cta-block .btn-primary { background: white; color: var(--indigo-dim); box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+  .cta-block .btn-primary:hover { background: var(--mist); color: var(--indigo-dim); transform: translateY(-2px); }
+
+  @media (max-width: 640px) {
+    .cta-block { padding: 48px 28px; }
+  }
+
+  /* ---- Footer ---- */
+  footer {
+    border-top: 1px solid var(--ink-line);
+    padding: 56px 0 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .footer-brand .brand { margin-bottom: 14px; }
+  .footer-brand p { font-size: 13.5px; color: var(--text-lo); max-width: 280px; }
+  .footer-col h4 { font-size: 13px; color: var(--text-lo); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; font-family: var(--font-mono); font-weight: 400; }
+  .footer-col a { display: block; font-size: 14px; color: var(--text-hi); margin-bottom: 10px; transition: color 0.15s; }
+  .footer-col a:hover { color: var(--indigo); }
+  .footer-bottom {
+    padding-top: 28px;
+    border-top: 1px solid var(--ink-line);
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--text-lo);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media (max-width: 760px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  /* Small helper */
+  .center { text-align: center; }
+  .mx-auto { margin-left: auto; margin-right: auto; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+        <circle cx="13" cy="13" r="11" fill="#4F46E5" opacity="0.15"/>
+        <circle cx="13" cy="13" r="6" fill="#4F46E5" opacity="0.3"/>
+        <circle cx="13" cy="13" r="2.6" fill="#4F46E5"/>
+        <line x1="13" y1="4" x2="13" y2="7.5" stroke="#4F46E5" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="13" y1="18.5" x2="13" y2="22" stroke="#4F46E5" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="4" y1="13" x2="7.5" y2="13" stroke="#4F46E5" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="18.5" y1="13" x2="22" y2="13" stroke="#4F46E5" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      Axon<span class="ai-tag"> AI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#problem">The problem</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#contact" class="nav-cta">Book a call</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">Menu</button>
+  </div>
+  
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#problem" class="mobile-link">The problem</a>
+    <a href="#how" class="mobile-link">How it works</a>
+    <a href="#pricing" class="mobile-link">Pricing</a>
+    <a href="#faq" class="mobile-link">FAQ</a>
+    <a href="#contact" class="nav-cta center">Book a call</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Serving home service businesses on the Central Coast</div>
+      <h1>Every missed call<br>is a job you<br><span class="accent">didn't book.</span></h1>
+      <p class="lead">
+        Axon AI builds automation systems for home service companies — plumbing, HVAC,
+        electrical, landscaping, roofing — that answer, follow up, and book jobs while
+        you're on a ladder, under a sink, or asleep.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Book a free discovery call →</a>
+        <a href="#how" class="btn-secondary">See how it works</a>
+      </div>
+      <div class="hero-proof">
+        <div class="hero-proof-item"><strong>&lt; 60 sec</strong>Response time to a missed call</div>
+        <div class="hero-proof-item"><strong>24 / 7</strong>Automated follow-up, every lead</div>
+        <div class="hero-proof-item"><strong>2 weeks</strong>From signup to fully live</div>
+      </div>
+    </div>
+
+    <div class="ledger" role="img" aria-label="Animated demo showing a missed call automatically followed up by text, then booked as an appointment">
+      <div class="ledger-head">
+        <span class="label">Live activity feed</span>
+        <span class="live-pill"><span class="live-dot"></span>SYSTEM ACTIVE</span>
+      </div>
+
+      <div class="ledger-row" style="animation-delay: 0.1s;">
+        <div class="dot dot-miss"></div>
+        <div>
+          <div class="row-text">Missed call — (805) 555-0148</div>
+          <div class="row-sub">Caller did not leave voicemail</div>
+        </div>
+        <div class="row-time">4:52 PM</div>
+      </div>
+
+      <div class="ledger-row" style="animation-delay: 0.6s;">
+        <div class="dot dot-sent"></div>
+        <div>
+          <div class="row-text">Auto-text sent — "Sorry we missed you..."</div>
+          <div class="row-sub">Sent 41 seconds after missed call</div>
+        </div>
+        <div class="row-time">4:53 PM</div>
+      </div>
+
+      <div class="ledger-row" style="animation-delay: 1.1s;">
+        <div class="dot dot-sent"></div>
+        <div>
+          <div class="row-text">Customer replied — "yes need a quote"</div>
+          <div class="row-sub">AI sent booking link automatically</div>
+        </div>
+        <div class="row-time">4:58 PM</div>
+      </div>
+
+      <div class="ledger-row" style="animation-delay: 1.6s;">
+        <div class="dot dot-book"></div>
+        <div>
+          <div class="row-text">Job booked — Thursday, 10:00 AM</div>
+          <div class="row-sub">Added to calendar, confirmation sent</div>
+        </div>
+        <div class="row-time">5:01 PM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="on-light" id="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The real cost</div>
+      <h2>You're not losing to competitors.<br>You're losing to voicemail.</h2>
+      <p class="lead">Most home service businesses lose 20–40% of inbound calls to voicemail,
+        and most of those leads never get a callback. That's not a marketing problem.
+        It's a follow-up problem — and it's fixable.</p>
+    </div>
+
+    <div class="problem-grid reveal">
+      <div class="problem-card">
+        <div class="num">01 — THE MISS</div>
+        <h3>You're on a job, not by a phone</h3>
+        <p>You're under a house, on a roof, or mid-install. The phone rings once and goes
+          to voicemail. The caller hangs up and calls the next company on Google.</p>
+      </div>
+      <div class="problem-card">
+        <div class="num">02 — THE SILENCE</div>
+        <h3>Nobody calls them back in time</h3>
+        <p>By the time you're free to call back, hours have passed. Most homeowners have
+          already booked someone else. The lead is gone — and you paid for it.</p>
+      </div>
+      <div class="problem-card">
+        <div class="num">03 — THE LEAK</div>
+        <h3>It happens daily, and adds up fast</h3>
+        <p>One missed job might be a $300 ticket. Ten a month is $3,000. A year of that
+          leak is real money walking to a competitor with better follow-up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>One system. Installed once.<br>Working every hour you're not.</h2>
+      <p class="lead">No new hires, no new hardware, nothing to remember to check.
+        Axon AI plugs into the way you already run your business.</p>
+    </div>
+
+    <div class="process reveal">
+      <div class="process-step">
+        <span class="step-num">01</span>
+        <h3>We map your business</h3>
+        <p>A short call to understand how leads come in today and where they're falling
+          through the cracks.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">02</span>
+        <h3>We build your system</h3>
+        <p>Missed-call text-back, lead follow-up, review requests, and booking — configured
+          and tested for your business specifically.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">03</span>
+        <h3>You go live</h3>
+        <p>Typically within two weeks. Your team gets a five-minute walkthrough. Nothing
+          changes about how customers reach you — they just stop falling through.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">04</span>
+        <h3>We keep tuning it</h3>
+        <p>Monthly check-ins on what's working, what's not, and what to automate next as
+          your business grows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof-strip" style="padding-top:0; padding-bottom:0;">
+  <div class="wrap reveal">
+    <div class="proof-stat"><strong>100+</strong><span>Home service businesses on the Central Coast</span></div>
+    <div class="proof-stat"><strong>20–40%</strong><span>Calls typically missed before automation</span></div>
+    <div class="proof-stat"><strong>8–15</strong><span>Extra jobs booked per month, on average</span></div>
+    <div class="proof-stat"><strong>805</strong><span>Local — not a call center, not outsourced</span></div>
+  </div>
+</section>
+
+<section class="on-light" id="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Pricing</div>
+      <h2>Simple pricing.<br>No contracts to start.</h2>
+      <p class="lead">Month-to-month. If it's not making you money, you can leave —
+        but it will, so you probably won't.</p>
+    </div>
+
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="tier-name">Starter</div>
+        <div class="tier-price">$1,500<span>/mo</span></div>
+        <div class="tier-setup">$2,500 one-time setup</div>
+        <ul>
+          <li>Missed-call text-back</li>
+          <li>Automated review requests</li>
+          <li>30-day lead follow-up sequence</li>
+          <li>24/7 online booking calendar</li>
+          <li>Simple CRM dashboard</li>
+        </ul>
+        <a href="#contact" class="btn-secondary center">Get started</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="tier-name">Growth</div>
+        <div class="tier-price">$3,500<span>/mo</span></div>
+        <div class="tier-setup">$2,500 one-time setup</div>
+        <ul>
+          <li>Everything in Starter</li>
+          <li>24/7 AI voice agent for calls</li>
+          <li>Seasonal campaign automation</li>
+          <li>Local ads management</li>
+          <li>Monthly performance report</li>
+        </ul>
+        <a href="#contact" class="btn-primary center">Get started</a>
+      </div>
+
+      <div class="price-card">
+        <div class="tier-name">Enterprise</div>
+        <div class="tier-price">$5K–8K<span>/mo</span></div>
+        <div class="tier-setup">$5,000 one-time setup</div>
+        <ul>
+          <li>Everything in Growth</li>
+          <li>Custom-trained AI chatbot</li>
+          <li>Deep field-service software integration</li>
+          <li>Custom reporting dashboard</li>
+          <li>Weekly strategy calls</li>
+        </ul>
+        <a href="#contact" class="btn-secondary center">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="max-width: 760px;">
+    <div class="section-head reveal" style="margin-bottom: 32px;">
+      <div class="eyebrow">Questions</div>
+      <h2>Things owners usually ask</h2>
+    </div>
+
+    <div class="reveal">
+      <details class="faq-item">
+        <summary>Do I need to change my phone number or software?</summary>
+        <p>No. Axon AI connects to the way you already operate — your existing phone number,
+          your existing scheduling tools. Nothing changes for your customers except that
+          someone always responds.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What if I already use ServiceTitan, Jobber, or Housecall Pro?</summary>
+        <p>We integrate with all of them. Axon AI handles the automated follow-up, review
+          requests, and lead nurture that those platforms don't do natively.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How long until it's actually live?</summary>
+        <p>Typically two weeks from your first call to a fully working system. You'll get a
+          short walkthrough before it goes live, and we test everything before your
+          customers ever see it.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is this a call center answering my phone?</summary>
+        <p>No. This is automation, not outsourced labor. The system texts back, follows up,
+          and books appointments — it doesn't pretend to be a person, and your team is
+          always looped in on anything that needs a real conversation.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What happens if I want to cancel?</summary>
+        <p>Month-to-month means no long-term contract. 30 days' notice and you're out — no
+          cancellation fees, no hard feelings.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="cta-block">
+      <h2>Stop losing jobs to voicemail.</h2>
+      <p>Book a free 20-minute call. We'll look at how your leads come in today and show you
+        exactly what's falling through.</p>
+      <a href="https://calendly.com/nathanmalone1011/30min" class="btn-primary" target="_blank" rel="noopener">Book your free call →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#top" class="brand">
+          <svg width="24" height="24" viewBox="0 0 26 26" aria-hidden="true">
+            <circle cx="13" cy="13" r="11" fill="#4F46E5" opacity="0.15"/>
+            <circle cx="13" cy="13" r="6" fill="#4F46E5" opacity="0.3"/>
+            <circle cx="13" cy="13" r="2.6" fill="#4F46E5"/>
+            <line x1="13" y1="4" x2="13" y2="7.5" stroke="#4F46E5" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="13" y1="18.5" x2="13" y2="22" stroke="#4F46E5" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="4" y1="13" x2="7.5" y2="13" stroke="#4F46E5" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="18.5" y1="13" x2="22" y2="13" stroke="#4F46E5" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          Axon<span class="ai-tag"> AI</span>
+        </a>
+        <p>Intelligent automation for home service businesses. Built and run on
+          California's Central Coast.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#problem">The problem</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:nathanmalone1011@gmail.com">nathanmalone1011@gmail.com</a>
+        <a href="tel:+18059033050">(805) 903-3050</a>
+        <a href="#contact">Book a call</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Axon AI. All rights reserved.</span>
+      <span>San Luis Obispo &amp; Santa Barbara Counties, CA</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Set current year dynamically
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile navigation drawer toggle
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  navToggle.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // Seamless Activity Feed Looper
+  function loopLedger() {
+    const rows = document.querySelectorAll('.ledger-row');
+    rows.forEach(row => {
+      row.style.animation = 'none';
+      void row.offsetWidth; // Trigger reflow
+      row.style.animation = null;
+    });
+  }
+  setInterval(loopLedger, 6500);
+
+  // Intersection Observer for Smooth On-Scroll Reveal Animations
+  const revealCallback = (entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  };
+
+  const revealObserver = new IntersectionObserver(revealCallback, {
+    root: null,
+    threshold: 0.12
+  });
+
+  document.querySelectorAll('.reveal').forEach(element => {
+    revealObserver.observe(element);
+  });
+</script>
+
+</body>
+</html>
